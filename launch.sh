@@ -5,6 +5,7 @@ export WINEPREFIX="$HOME/.spelunky2.wine"
 cd "$(dirname "$0")"
 data_dir="$(realpath .)"
 main_dir="$(realpath ..)/MAIN"
+wine_dir="$(realpath ..)/wine"
 sync_files() {
   for name in input.cfg local.cfg settings.cfg savegame.sav; do
     pretty-exec -- cp "$1/$name" "$2/$name"
@@ -13,7 +14,7 @@ sync_files() {
 commit_message_file=$(mktemp --suffix='.log')
 command=(
   time --format='Played for %E (%es)' --output="$commit_message_file"
-  wine-env "$(pwd)/wine"
+  wine-env "$wine_dir"
   run-at "$main_dir"
   wine64 Spel2.exe
 )
