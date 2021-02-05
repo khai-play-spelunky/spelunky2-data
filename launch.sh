@@ -27,9 +27,9 @@ command=(
   run-at "$main_dir"
   wine64 Spel2.exe
 )
-gsettings set org.gnome.desktop.notifications show-banners "$reenable_notification_banners"
 sync_files "$data_dir" "$main_dir"
 pretty-exec -- "${command[@]}"
+gsettings set org.gnome.desktop.notifications show-banners "$reenable_notification_banners"
 sync_files "$main_dir" "$data_dir"
 pretty-exec -- git add -v .
 pretty-exec -- git commit --allow-empty --message="$(<"$commit_message_file")"
