@@ -6,11 +6,13 @@ if [ -f /tmp/spelunky2.lock ]; then
   echo 'error: Lock file exits' >&2
   echo 'hint: If Spelunky 2 is running, wait for it to exit' >&2
   echo 'hint: If Spelunky 2 is not running, delete /tmp/spelunky2.lock' >&2
+  notify-send 'Lock file exits' '/tmp/spelunky2.lock' --icon=dialog-error
   exit 1
 fi
 
 if ! touch /tmp/spelunky2.lock; then
   echo 'Failed to create lock file /tmp/spelunky2.lock' >&2
+  notify-send 'Failed to create lock file' '/tmp/spelunky2.lock' --icon=dialog-error
   exit 1
 fi
 
