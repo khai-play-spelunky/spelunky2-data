@@ -2,6 +2,18 @@
 set -o errexit -o pipefail -o nounset
 export WINEPREFIX="$HOME/.spelunky2.wine"
 
+if [ -f /tmp/spelunky2.lock ]; then
+  echo 'error: Lock file exits' >&2
+  echo 'hint: If Spelunky 2 is running, wait for it to exit' >&2
+  echo 'hint: If Spelunky 2 is not running, delete /tmp/spelunky2.lock' >&2
+  exit 1
+fi
+
+if ! touch /tmp/spelunky2.lock; then
+  echo 'Failed to create lock file /tmp/spelunky2.lock' >&2
+  exit 1
+fi
+
 reenable_notification_banners=false
 if [ "$(gsettings get org.gnome.desktop.notifications show-banners)" == 'true' ]; then
   notify-send 'Warning' 'Enabling Do-Not-Disturb' \
@@ -29,6 +41,7 @@ command=(
 )
 sync_files "$data_dir" "$main_dir"
 pretty-exec -- "${command[@]}"
+rm /tmp/spelunky2.lock
 gsettings set org.gnome.desktop.notifications show-banners "$reenable_notification_banners"
 sync_files "$main_dir" "$data_dir"
 pretty-exec -- git add -v .
