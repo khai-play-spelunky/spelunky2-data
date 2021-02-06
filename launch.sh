@@ -5,8 +5,8 @@ export WINEPREFIX="$HOME/.spelunky2.wine"
 reenable_notification_banners=false
 if [ "$(gsettings get org.gnome.desktop.notifications show-banners)" == 'true' ]; then
   notify-send 'Warning' 'Enabling Do-Not-Disturb' \
-    --expire-time=2000 --icon=spelunky2
-  sleep 2
+    --expire-time=1000 --icon=spelunky2
+  sleep 1
   reenable_notification_banners=true
   gsettings set org.gnome.desktop.notifications show-banners false
 fi
